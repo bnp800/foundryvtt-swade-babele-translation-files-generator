@@ -73,7 +73,7 @@ export class ItemExporter extends AbstractExporter {
 
     static addBaseMapping(mapping, document, documentData) {
         const { system } = document;
-        const { source, movement, senses, weight, range, target, capacity, activities, advancement } = system;
+        const { movement, senses, weight, range, target, capacity, activities, advancement } = system;
 
         const updateMapping = (field, condition, path, converter) => {
             if (!mapping[field] && condition) {

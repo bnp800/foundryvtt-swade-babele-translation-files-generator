@@ -44,12 +44,12 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
         sidebar: {
             id: "sidebar",
             classes: ["sidebar"],
-            template: "modules/dnd-babele-translation-files-generator/templates/sidebar.hbs"
+            template: "modules/dnd5e-babele-translation-files-generator/templates/sidebar.hbs"
         },
         export: {
             id: "export",
             classes: ["export-options"],
-            template: "modules/dnd-babele-translation-files-generator/templates/export.hbs",
+            template: "modules/dnd5e-babele-translation-files-generator/templates/export.hbs",
             templates: ["templates/generic/tab-navigation.hbs"],
             scrollable: [""]
         },

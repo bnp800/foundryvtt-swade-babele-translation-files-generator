@@ -48,7 +48,7 @@ export class ActorExporter extends AbstractExporter {
   
   static addBaseMapping(mapping, document, documentData) {
     const { system, prototypeToken } = document;
-    const { source, attributes } = system;
+    const { attributes, traits } = system;
     const { movement, senses } = attributes;
     
     const updateMapping = (field, condition, path, converter) => {
@@ -68,6 +68,15 @@ export class ActorExporter extends AbstractExporter {
     const sensesCondition = senses && ["ft", "mi"].includes(senses.units) &&
       (senses.darkvision || senses.blindsight || senses.tremorsense || senses.truesight);
     updateMapping('senses', sensesCondition, 'system.attributes.senses', 'senses');
+
+    const communication = traits?.languages?.communication;
+    if (communication && typeof communication === "object") {
+      Object.entries(communication).forEach(([, value]) => {
+        if (["ft", "mi"].includes(value.units) && value.value) {
+          updateMapping('communication', true, 'system.traits.languages.communication', "communication");
+        }
+      });
+    }
 
     updateMapping('items', documentData.items, 'items', 'items');
     updateMapping('effects', documentData.effects, 'effects', 'effects');
