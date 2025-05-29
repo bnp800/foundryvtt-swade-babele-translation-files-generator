@@ -1,0 +1,190 @@
+.compendium-exporter {
+    .window-content {
+        display: grid;
+        grid-template-areas:
+            "sidebar export-options"
+            "sidebar form-footer";
+        grid-template-columns: 230px auto;
+        grid-template-rows: auto 2.75rem;
+
+        .sidebar { grid-area: sidebar; }
+        .export-options { grid-area: export-options; }
+        .form-footer { grid-area: form-footer; }
+    }
+
+    .sidebar {
+        height: 100%;
+        overflow-y: auto;
+        gap: 12px;
+        padding: 6px 4px 3px 12px;
+        font-family: "Roboto Condensed", sans-serif;
+        scrollbar-gutter: stable;
+
+        .roboto-upper {
+            font-family: Roboto, sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .filter-header>label {
+            margin-top: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            font-size: var(--font-size-11);
+
+            >span {
+                flex: none;
+                color: #666;
+            }
+
+            &::before,
+            &::after {
+                content: "";
+                flex-basis: 50%;
+                border-top: 1px dotted #9f9275;
+                align-self: center;
+            }
+        }
+
+        .collapsible {
+            &.collapsed {
+                .fa-caret-down {
+                    transform: rotate(-90deg);
+                }
+
+                .collapsible-content {
+                    grid-template-rows: 0fr;
+                }
+            }
+
+            .fa-caret-down {
+                transition: transform 250ms ease;
+            }
+
+            .collapsible-content {
+                display: grid;
+                grid-template-rows: 1fr;
+                transition: grid-template-rows 250ms ease;
+
+                >.wrapper {
+                    overflow: hidden;
+                }
+            }
+        }
+
+        .collapsible-content>.wrapper:empty {
+            display: none;
+        }
+
+        .filter-choice {
+            cursor: pointer;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+    }
+
+    .export-options {
+        padding: 10px;
+        overflow-y: auto;
+
+        .warn-babele {
+            color: #8b8000;
+            background-color: #ffffcc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #8b8000;
+        }
+
+        .hint {
+            --color-form-hint: var(--color-text-light-6);
+            color: var(--color-text-light-6);
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            border-color: var(--color-fieldset-border);
+            border-radius: 8px;
+        }
+
+        .tab.mappings {
+            gap: 0.5rem;
+            overflow-y: hidden;
+            header, ol {
+                align-items: center;
+                display: grid;
+                gap: 0.25rem;
+                grid-template-columns: 47% 47% 4%;
+                margin-top: 5px;
+                padding: 2px;
+                position: relative;
+                .controls {
+                    text-align: right;
+                }
+            }
+            header {
+                text-align: left;
+            }
+            ol li {
+                display: contents;
+            }
+        }
+
+        .mapping-actions {
+            display: flex;
+            gap: 10px;
+
+            .small {
+                flex: 0;
+            }
+
+            .d-none {
+                display: none;
+                width: 0;
+                height: 0;
+            }
+        }
+
+        .mapping-options .form-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0;
+            gap: 0.5rem;
+        }
+
+        .mapping-options .form-group .form-fields {
+            flex: 1;
+            text-align: right;
+        }
+
+        .massive-export {
+            display: grid;
+            grid-template-columns: 33% 33% 33%;
+            gap: 2.5px;
+        }
+
+        .massive-export .form-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0;
+            gap: 0.5rem;
+        }
+
+        .massive-export .form-group label {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

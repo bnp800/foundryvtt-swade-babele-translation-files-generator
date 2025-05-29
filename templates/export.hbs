@@ -1,0 +1,100 @@
+<div>
+  <h3><i class="{{ packIcon }}"></i> {{ packName }} {{#if pack}}({{localize "BTFG.CompendiumExporter.CompendiumIndexSize" size=pack.index.size}}){{/if}}</h3>
+
+  {{#if translatedPack}}
+  <p class="warn-babele">{{localize "BTFG.CompendiumExporter.WarnBabeleActive"}}</p>
+  {{/if}}
+
+  <div>
+    <section>
+      {{#if tabs}}
+      <fieldset>
+        <legend>{{localize "BTFG.CompendiumExporter.CustomMapping"}}</legend>
+        <p class="hint">{{localize "BTFG.CompendiumExporter.CustomMappingHint"}}</p>
+
+        {{> templates/generic/tab-navigation.hbs }}
+
+        {{#each tabs as |tab|}}
+        <section class="tab mappings{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+          <header>
+            <div class="key">{{localize "EFFECT.ChangeKey"}}</div>
+            <div class="value">{{localize "EFFECT.ChangeValue"}}</div>
+            <div class="controls"><a data-action="addMapping"><i class="fa-regular fa-square-plus"></i></a></div>
+          </header>
+          <ol>
+            {{#each (lookup ../mappings tab.id)}}
+            <li data-index="{{idx}}">
+              <div class="key">
+                {{formInput key.field name=key.name value=key.value placeholder=key.placeholder}}
+              </div>
+              <div class="value">
+                {{formInput value.field name=value.name value=value.value placeholder=value.placeholder}}
+              </div>
+              <div class="controls"><a data-action="deleteMapping" data-idx="{{idx}}"><i
+                    class="fa-solid fa-trash"></i></a></div>
+            </li>
+            {{/each}}
+          </ol>
+        </section>
+        {{/each}}
+
+        <div class="mapping-actions flexrow">
+          <button type="button" data-action="exportMapping">
+            <i class="fa-solid fa-file-export"></i> {{localize "BTFG.CompendiumExporter.ExportCustomMapping"}}
+          </button>
+          <button type="button" data-action="importMapping">
+            <i class="fa-solid fa-file-import"></i> {{localize "BTFG.CompendiumExporter.ImportCustomMapping"}}
+          </button>
+          <input id="import-custom-mapping-input" type="file" class="d-none" accept=".json" />
+        </div>
+      </fieldset>
+      {{/if}}
+    </section>
+    {{#unless pack}}
+    <div>
+      {{#each packs as |pack packKey|}}
+      <hr>
+      <fieldset>
+        <legend>
+          <i class="fa-solid {{ pack.icon }}"></i>
+          <span class="title">{{ packKey }}</span>
+        </legend>
+        <section class="massive-export flexrow">
+          {{~#each pack as |content key|}}
+          {{#if content.id}}
+          <div class="form-group">
+              <dnd5e-checkbox name="{{ content.id }}" {{ checked (includes ../../selectedPacks content.id)}}></dnd5e-checkbox>
+              <span class="title">{{ content.label }}</span>
+          </div>
+          {{/if}}
+          {{/each~}}
+        </section>
+      </fieldset>
+      {{/each}}
+    </div>
+    {{/unless}}
+    <hr>
+    <div class="mapping-options">
+      {{#if pack}}
+      <div class="form-group">
+        <label for="existingFile">{{ localize "BTFG.CompendiumExporter.UseExistingFile" }}</label>
+        <div class="form-group">
+            <div class="form-fields">
+              <input type="file" id="existingFile" name="existingFile" accept=".json">
+            </div>
+            {{#if selectedFileName}}
+            <p>{{ localize "BTFG.CompendiumExporter.SelectedFile" }} <strong>{{ selectedFileName }}</strong></p>
+            <div class="controls"><a data-action="unselectFile"><i class="fa-solid fa-trash"></i></a></div>
+            {{/if}}
+        </div>
+      </div>
+      <p class="hint">{{ localize "BTFG.CompendiumExporter.UseExistingFileHint" }}</p>
+      {{else}}
+      {{ formGroup includeCustomMappingInFiles.field value=includeCustomMappingInFiles.value localize=true }}
+      {{ formGroup exportMappingWithPacks.field value=exportMappingWithPacks.value localize=true }}
+      {{/if}}
+      {{ formGroup sortEntries.field value=sortEntries.value localize=true }}
+      {{ formGroup useIdAsKey.field value=useIdAsKey.value localize=true }}
+    </div>
+  </div>
+</div>

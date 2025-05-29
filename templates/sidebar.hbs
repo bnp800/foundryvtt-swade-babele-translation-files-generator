@@ -1,0 +1,29 @@
+<div>
+    <div>
+        <label class="filter-choice" data-action="openPack">
+            <i class="fa-solid fa-book-atlas"></i>
+            <span>{{ localize "BTFG.CompendiumExporter.BulkExport" }}</span>
+        </label>
+    </div>
+    {{#each packs as |pack packKey|}}
+    <div class="collapsible">
+        <div class="filter-header">
+            <label data-action="toggleCollapse">
+                <i class="fa-solid {{ pack.icon }}"></i>
+                <span class="roboto-upper">{{ packKey }}</span>
+                <i class="fa-solid fa-caret-down"></i>
+            </label>
+        </div>
+        <div class="collapsible-content">
+            <div class="wrapper">
+                {{~#each pack as |content key|}}
+                <label class="filter-choice" data-pack-id="{{ content.id }}" data-action="openPack">
+                    <i class="{{ content.icon }}"></i>
+                    <span>{{ content.label }}</span>
+                </label>
+                {{/each~}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
