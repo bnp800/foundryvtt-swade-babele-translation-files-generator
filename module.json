@@ -4,7 +4,8 @@
   "description": "Generate translation file for Babele by selecting a valid Compendium from dnd5e system.",
   "version": "This is auto replaced",
   "compatibility": {
-    "minimum": "13"
+    "minimum": "13",
+    "verified": "13.344"
   },
   "authors": [
     {
