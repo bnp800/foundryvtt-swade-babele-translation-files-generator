@@ -50,20 +50,20 @@
     - 简化 `addBaseMapping` 方法，仅保留 effects 映射
     - _Requirements: 5.1_
 
-- [ ] 4. ActorExporter 重构
-  - [ ] 4.1 移除 D&D 5e 特有字段处理
+- [x] 4. ActorExporter 重构
+  - [x] 4.1 移除 D&D 5e 特有字段处理
     - 移除 alignment 处理逻辑
     - 移除 `addBaseMapping` 中的 movement、senses、travel、communication 等映射
     - 移除 D&D 5e 特有的 conditions 过滤列表
     - _Requirements: 5.4_
 
-  - [ ] 4.2 实现 SWADE Actor 字段提取
+  - [x] 4.2 实现 SWADE Actor 字段提取
     - 更新 `getDocumentData` 方法支持 character/npc 类型的 biography、appearance、notes、goals 字段
     - 添加 vehicle/group 类型的 description 字段处理
     - 保留 tokenName、items、effects 处理逻辑
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8_
 
-  - [ ] 4.3 更新 ActorExporter 基础映射
+  - [x] 4.3 更新 ActorExporter 基础映射
     - 简化 `addBaseMapping` 方法，仅保留 items 和 effects 映射
     - _Requirements: 5.2_
 
