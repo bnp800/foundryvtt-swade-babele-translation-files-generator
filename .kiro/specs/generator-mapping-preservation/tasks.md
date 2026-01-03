@@ -80,8 +80,8 @@
 - [ ] 4. Checkpoint - 确保核心组件测试通过
   - 确保所有核心组件测试通过，如有问题请询问用户
 
-- [ ] 5. 增强抽象导出器实现
-  - [ ] 5.1 创建 EnhancedAbstractExporter 基类
+- [x] 5. 增强抽象导出器实现
+  - [x] 5.1 创建 EnhancedAbstractExporter 基类
     - 继承现有 AbstractExporter 并增强功能
     - 集成映射保留引擎和智能过滤器
     - 修改 `scripts/exporters/abstract-exporter.mjs` 文件
@@ -92,7 +92,7 @@
     - **Property 12: Deep Merge Strategy Completeness**
     - **Validates: Requirements 4.1, 4.3**
 
-  - [ ] 5.3 实现现有翻译文件加载功能
+  - [x] 5.3 实现现有翻译文件加载功能
     - 从现有翻译文件中提取映射配置
     - 实现向后兼容性处理
     - _Requirements: 10.1, 10.2_
