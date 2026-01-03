@@ -261,5 +261,164 @@
             text-overflow: ellipsis;
             cursor: pointer;
         }
+
+        /* Export Preview Styles */
+        .export-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+
+            h4 {
+                margin: 0 0 10px 0;
+                color: #495057;
+                font-size: 1.1em;
+            }
+
+            &.loading {
+                text-align: center;
+                padding: 20px;
+                color: #6c757d;
+            }
+        }
+
+        .preview-summary {
+            .summary-item {
+                margin-bottom: 8px;
+                
+                strong {
+                    color: #495057;
+                }
+            }
+
+            .content-summary ul {
+                margin: 5px 0 0 20px;
+                padding: 0;
+                
+                li {
+                    margin-bottom: 3px;
+                    
+                    i {
+                        margin-right: 5px;
+                        width: 16px;
+                    }
+                }
+            }
+        }
+
+        .mapping-preview {
+            margin-top: 15px;
+            
+            .mapping-details {
+                background: #ffffff;
+                border: 1px solid #e9ecef;
+                border-radius: 4px;
+                padding: 10px;
+                margin: 8px 0;
+                
+                h5 {
+                    margin: 0 0 8px 0;
+                    color: #495057;
+                    font-size: 1em;
+                    font-weight: bold;
+                }
+                
+                p {
+                    margin: 4px 0;
+                    font-size: 0.9em;
+                }
+                
+                details {
+                    margin-top: 10px;
+                    
+                    summary {
+                        cursor: pointer;
+                        font-weight: bold;
+                        color: #007bff;
+                        margin-bottom: 5px;
+                        
+                        &:hover {
+                            color: #0056b3;
+                        }
+                    }
+                }
+            }
+        }
+
+        .mapping-fields {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            
+            .mapping-field {
+                display: flex;
+                align-items: center;
+                padding: 4px 8px;
+                margin: 2px 0;
+                border-radius: 3px;
+                font-size: 0.85em;
+                
+                &.custom {
+                    background-color: #e3f2fd;
+                    border-left: 3px solid #2196f3;
+                }
+                
+                &.standard {
+                    background-color: #f3e5f5;
+                    border-left: 3px solid #9c27b0;
+                }
+                
+                code {
+                    background: rgba(0,0,0,0.1);
+                    padding: 1px 4px;
+                    border-radius: 2px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 0.9em;
+                }
+                
+                .field-source {
+                    margin-left: auto;
+                    font-size: 0.8em;
+                    color: #6c757d;
+                    font-style: italic;
+                }
+            }
+        }
+
+        .smart-filtering-preview {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            border-radius: 4px;
+            
+            strong {
+                color: #155724;
+            }
+            
+            p {
+                margin: 5px 0 0 0;
+                color: #155724;
+            }
+        }
+
+        /* Option Group Styles */
+        .mapping-options fieldset {
+            margin-bottom: 15px;
+            
+            legend {
+                font-weight: bold;
+                color: #495057;
+                font-size: 0.95em;
+                padding: 0 8px;
+            }
+            
+            .form-group {
+                margin: 8px 0;
+            }
+        }
     }
 }

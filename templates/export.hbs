@@ -143,10 +143,104 @@
       {{ formGroup includeCustomMappingInFiles.field value=includeCustomMappingInFiles.value localize=true }}
       {{ formGroup exportMappingWithPacks.field value=exportMappingWithPacks.value localize=true }}
       {{/if}}
-      {{ formGroup sortEntries.field value=sortEntries.value localize=true }}
-      {{ formGroup useIdAsKey.field value=useIdAsKey.value localize=true }}
-      {{ formGroup enableSmartFiltering.field value=enableSmartFiltering.value localize=true }}
-      {{ formGroup includeAllEmbeddedItems.field value=includeAllEmbeddedItems.value localize=true }}
+      
+      <fieldset>
+        <legend>{{ localize "BTFG.CompendiumExporter.GeneralOptions" }}</legend>
+        {{ formGroup sortEntries.field value=sortEntries.value localize=true }}
+        {{ formGroup useIdAsKey.field value=useIdAsKey.value localize=true }}
+      </fieldset>
+
+      <fieldset>
+        <legend>{{ localize "BTFG.CompendiumExporter.MappingPreservationOptions" }}</legend>
+        {{ formGroup preserveExistingMappings.field value=preserveExistingMappings.value localize=true }}
+        {{ formGroup validateMappingCompleteness.field value=validateMappingCompleteness.value localize=true }}
+      </fieldset>
+
+      <fieldset>
+        <legend>{{ localize "BTFG.CompendiumExporter.SmartFilteringOptions" }}</legend>
+        {{ formGroup enableSmartFiltering.field value=enableSmartFiltering.value localize=true }}
+        {{ formGroup includeAllEmbeddedItems.field value=includeAllEmbeddedItems.value localize=true }}
+      </fieldset>
+
+      <fieldset>
+        <legend>{{ localize "BTFG.CompendiumExporter.IncrementalExportOptions" }}</legend>
+        {{ formGroup enableIncrementalExport.field value=enableIncrementalExport.value localize=true }}
+      </fieldset>
     </div>
+
+    {{#if exportPreview}}
+    <hr>
+    <div class="export-preview">
+      <h4><i class="fa-solid fa-eye"></i> {{ localize "BTFG.CompendiumExporter.ExportPreview" }}</h4>
+      
+      <div class="preview-summary">
+        <div class="summary-item">
+          <strong>{{ localize "BTFG.CompendiumExporter.TotalItems" }}:</strong> {{ exportPreview.totalItems }}
+        </div>
+        
+        {{#if exportPreview.contentSummary}}
+        <div class="content-summary">
+          <strong>{{ localize "BTFG.CompendiumExporter.ContentSummary" }}:</strong>
+          <ul>
+            {{#each exportPreview.contentSummary as |content packName|}}
+            <li><i class="{{ lookup ../CONFIG content.type 'sidebarIcon' }}"></i> {{ packName }} ({{ content.type }}, {{ content.count }} items)</li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if exportPreview.mappingPreview}}
+        <div class="mapping-preview">
+          <strong>{{ localize "BTFG.CompendiumExporter.MappingPreview" }}:</strong>
+          {{#if exportPreview.mappingPreview.documentType}}
+          <!-- Single pack mapping preview -->
+          <div class="mapping-details">
+            <p>{{ localize "BTFG.CompendiumExporter.DocumentType" }}: <strong>{{ exportPreview.mappingPreview.documentType }}</strong></p>
+            <p>{{ localize "BTFG.CompendiumExporter.CustomFields" }}: <strong>{{ exportPreview.mappingPreview.customFields }}</strong></p>
+            <p>{{ localize "BTFG.CompendiumExporter.StandardFields" }}: <strong>{{ exportPreview.mappingPreview.standardFields }}</strong></p>
+            <p>{{ localize "BTFG.CompendiumExporter.TotalFields" }}: <strong>{{ exportPreview.mappingPreview.totalFields }}</strong></p>
+            
+            {{#if exportPreview.mappingPreview.fields}}
+            <details>
+              <summary>{{ localize "BTFG.CompendiumExporter.ViewMappingFields" }}</summary>
+              <ul class="mapping-fields">
+                {{#each exportPreview.mappingPreview.fields as |field|}}
+                <li class="mapping-field {{field.source}}">
+                  <code>{{ field.key }}</code> → <code>{{ field.value }}</code>
+                  <span class="field-source">({{ field.source }})</span>
+                </li>
+                {{/each}}
+              </ul>
+            </details>
+            {{/if}}
+          </div>
+          {{else}}
+          <!-- Multi-pack mapping preview -->
+          {{#each exportPreview.mappingPreview as |preview type|}}
+          <div class="mapping-details">
+            <h5>{{ type }}</h5>
+            <p>{{ localize "BTFG.CompendiumExporter.CustomFields" }}: <strong>{{ preview.customFields }}</strong></p>
+            <p>{{ localize "BTFG.CompendiumExporter.StandardFields" }}: <strong>{{ preview.standardFields }}</strong></p>
+            <p>{{ localize "BTFG.CompendiumExporter.TotalFields" }}: <strong>{{ preview.totalFields }}</strong></p>
+          </div>
+          {{/each}}
+          {{/if}}
+        </div>
+        {{/if}}
+
+        {{#if exportPreview.smartFilteringResults}}
+        <div class="smart-filtering-preview">
+          <strong>{{ localize "BTFG.CompendiumExporter.SmartFilteringPreview" }}:</strong>
+          <p>{{ exportPreview.smartFilteringResults.message }}</p>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{else if previewLoading}}
+    <hr>
+    <div class="export-preview loading">
+      <h4><i class="fa-solid fa-spinner fa-spin"></i> {{ localize "BTFG.CompendiumExporter.GeneratingPreview" }}</h4>
+    </div>
+    {{/if}}
   </div>
 </div>

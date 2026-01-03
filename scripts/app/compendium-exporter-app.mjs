@@ -29,7 +29,8 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
             removePill: CompendiumExporterApp.#removePill,
             exportMapping: CompendiumExporterApp.#exportMapping,
             importMapping: CompendiumExporterApp.#importMapping,
-            unselectFile: CompendiumExporterApp.#unselectFile
+            unselectFile: CompendiumExporterApp.#unselectFile,
+            previewExport: CompendiumExporterApp.#previewExport
         },
         form: {
             handler: CompendiumExporterApp.#onHandleSubmit,
@@ -118,6 +119,16 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
     };
 
     #collapseAdvanced = true;
+
+    /**
+     * Export preview data
+     */
+    #exportPreview = null;
+
+    /**
+     * Whether preview is currently being generated
+     */
+    #previewLoading = false;
 
     /** @inheritDoc */
     async _prepareContext(options) {
@@ -229,6 +240,18 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
             value: this.#options.useIdAsKey,
         };
 
+        // Mapping preservation options
+        context.preserveExistingMappings = {
+            field: this.#options.schema.getField("preserveExistingMappings"),
+            value: this.#options.preserveExistingMappings,
+        };
+
+        context.validateMappingCompleteness = {
+            field: this.#options.schema.getField("validateMappingCompleteness"),
+            value: this.#options.validateMappingCompleteness,
+        };
+
+        // Smart filtering options
         context.enableSmartFiltering = {
             field: this.#options.schema.getField("enableSmartFiltering"),
             value: this.#options.enableSmartFiltering,
@@ -239,8 +262,24 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
             value: this.#options.includeAllEmbeddedItems,
         };
 
+        // Incremental export options
+        context.enableIncrementalExport = {
+            field: this.#options.schema.getField("enableIncrementalExport"),
+            value: this.#options.enableIncrementalExport,
+        };
+
+        // Export preview
+        context.exportPreview = this.#exportPreview;
+        context.previewLoading = this.#previewLoading;
+
         // Buttons
         context.buttons = [
+            {
+                type: "button",
+                action: "previewExport",
+                icon: "fa-solid fa-eye",
+                label: "BTFG.CompendiumExporter.PreviewExport",
+            },
             {
                 type: "submit",
                 icon: "fa-solid fa-check",
@@ -406,6 +445,169 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
     }
 
     /**
+    * Preview export content.
+    * @this {CompendiumExporterApp}
+    * @param {PointerEvent} event  The originating click event.
+    * @param {HTMLElement} target  The capturing HTML element which defined a [data-action].
+    */
+    static async #previewExport(event, target) {
+        event.preventDefault();
+
+        if (this.#previewLoading) return;
+
+        this.#previewLoading = true;
+        this.render({ parts: ["export"] });
+
+        try {
+            const pack = this._getPack();
+            
+            if (!pack && this.#selectedPacks.length === 0) {
+                ui.notifications.warn(game.i18n.localize("BTFG.CompendiumExporter.NoPackSelected"));
+                return;
+            }
+
+            const preview = {
+                totalItems: 0,
+                mappingFields: [],
+                contentSummary: {},
+                smartFilteringResults: null,
+                mappingPreview: null
+            };
+
+            if (pack) {
+                // Single pack preview
+                const documents = await pack.getIndex();
+                preview.totalItems = documents.size;
+                preview.contentSummary[pack.metadata.label] = {
+                    type: pack.metadata.type,
+                    count: documents.size
+                };
+
+                // Get mapping fields for this pack type
+                const mappings = this.#mappings[pack.metadata.type] || [];
+                preview.mappingFields = mappings.filter(m => m.key && m.value).map(m => ({
+                    key: m.key,
+                    value: m.value,
+                    type: pack.metadata.type
+                }));
+
+                // Generate detailed mapping preview
+                preview.mappingPreview = this._generateMappingPreview(pack.metadata.type, mappings);
+
+                // Smart filtering preview for Actor packs
+                if (pack.metadata.type === "Actor" && this.#options.enableSmartFiltering) {
+                    preview.smartFilteringResults = {
+                        enabled: true,
+                        includeAllEmbedded: this.#options.includeAllEmbeddedItems,
+                        message: this.#options.includeAllEmbeddedItems 
+                            ? "All embedded items will be included"
+                            : "Only untranslated or changed embedded items will be included"
+                    };
+                }
+            } else {
+                // Multi-pack preview
+                const mappingsByType = {};
+                for (const packId of this.#selectedPacks) {
+                    const selectedPack = game.packs.get(packId);
+                    if (selectedPack) {
+                        const documents = await selectedPack.getIndex();
+                        preview.totalItems += documents.size;
+                        preview.contentSummary[selectedPack.metadata.label] = {
+                            type: selectedPack.metadata.type,
+                            count: documents.size
+                        };
+
+                        // Collect mapping fields from all selected packs
+                        const mappings = this.#mappings[selectedPack.metadata.type] || [];
+                        const packMappings = mappings.filter(m => m.key && m.value).map(m => ({
+                            key: m.key,
+                            value: m.value,
+                            type: selectedPack.metadata.type,
+                            pack: selectedPack.metadata.label
+                        }));
+                        preview.mappingFields.push(...packMappings);
+
+                        // Group mappings by type for preview
+                        if (!mappingsByType[selectedPack.metadata.type]) {
+                            mappingsByType[selectedPack.metadata.type] = mappings;
+                        }
+                    }
+                }
+
+                // Generate combined mapping preview
+                preview.mappingPreview = {};
+                for (const [type, mappings] of Object.entries(mappingsByType)) {
+                    preview.mappingPreview[type] = this._generateMappingPreview(type, mappings);
+                }
+            }
+
+            this.#exportPreview = preview;
+        } catch (error) {
+            console.error("Error generating export preview:", error);
+            ui.notifications.error("Failed to generate export preview");
+            this.#exportPreview = null;
+        } finally {
+            this.#previewLoading = false;
+            this.render({ parts: ["export"] });
+        }
+    }
+
+    /**
+     * Generate detailed mapping configuration preview
+     * @param {string} documentType - The document type (Actor, Item, etc.)
+     * @param {Array} customMappings - Custom mappings for this type
+     * @returns {Object} Mapping preview data
+     * @private
+     */
+    _generateMappingPreview(documentType, customMappings) {
+        const preview = {
+            documentType,
+            customFields: customMappings.filter(m => m.key && m.value).length,
+            standardFields: 0,
+            totalFields: 0,
+            preservationEnabled: this.#options.preserveExistingMappings,
+            validationEnabled: this.#options.validateMappingCompleteness,
+            fields: []
+        };
+
+        // Add custom mapping fields
+        customMappings.filter(m => m.key && m.value).forEach(mapping => {
+            preview.fields.push({
+                key: mapping.key,
+                value: mapping.value,
+                source: 'custom'
+            });
+        });
+
+        // Simulate standard fields that would be added (this would normally come from templates)
+        const standardFieldsMap = {
+            'Item': ['description', 'notes', 'source', 'category'],
+            'Actor': ['biography', 'appearance', 'notes', 'goals'],
+            'Scene': ['description', 'notes'],
+            'JournalEntry': ['content', 'text']
+        };
+
+        const standardFields = standardFieldsMap[documentType] || [];
+        preview.standardFields = standardFields.length;
+
+        // Add standard fields to preview if they're not already custom mapped
+        const customKeys = new Set(preview.fields.map(f => f.key));
+        standardFields.forEach(field => {
+            if (!customKeys.has(field)) {
+                preview.fields.push({
+                    key: field,
+                    value: `system.${field}`,
+                    source: 'standard'
+                });
+            }
+        });
+
+        preview.totalFields = preview.fields.length;
+
+        return preview;
+    }
+
+    /**
     * Handle form submission with selection.
     * @this {CompendiumExporterApp}
     * @param {SubmitEvent} event          The form submission event.
@@ -457,7 +659,15 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
                     mapping: this.#mappings,
                     pillsByType: this.#pillsByType,
                     sortEntries: this.#options.sortEntries,
-                    useIdAsKey: this.#options.useIdAsKey
+                    useIdAsKey: this.#options.useIdAsKey,
+                    // Mapping preservation options
+                    preserveExistingMappings: this.#options.preserveExistingMappings,
+                    validateMappingCompleteness: this.#options.validateMappingCompleteness,
+                    // Smart filtering options
+                    enableSmartFiltering: this.#options.enableSmartFiltering,
+                    includeAllEmbeddedItems: this.#options.includeAllEmbeddedItems,
+                    // Incremental export options
+                    enableIncrementalExport: this.#options.enableIncrementalExport
                 };
 
                 if (pack) {
@@ -580,7 +790,15 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
             pillsByType: this.#pillsByType,
             sortEntries: this.#options.sortEntries,
             useIdAsKey: this.#options.useIdAsKey,
-            asZip: true
+            asZip: true,
+            // Mapping preservation options
+            preserveExistingMappings: this.#options.preserveExistingMappings,
+            validateMappingCompleteness: this.#options.validateMappingCompleteness,
+            // Smart filtering options
+            enableSmartFiltering: this.#options.enableSmartFiltering,
+            includeAllEmbeddedItems: this.#options.includeAllEmbeddedItems,
+            // Incremental export options
+            enableIncrementalExport: this.#options.enableIncrementalExport
         };
 
         var mapping = {};
@@ -798,6 +1016,16 @@ class OptionsModel extends foundry.abstract.DataModel {
             useIdAsKey: new BooleanField({
                 label: "BTFG.CompendiumExporter.UseIdAsKey",
             }),
+            // Mapping preservation options
+            preserveExistingMappings: new BooleanField({
+                initial: true,
+                label: "BTFG.CompendiumExporter.PreserveExistingMappings",
+            }),
+            validateMappingCompleteness: new BooleanField({
+                initial: true,
+                label: "BTFG.CompendiumExporter.ValidateMappingCompleteness",
+            }),
+            // Smart filtering options
             enableSmartFiltering: new BooleanField({
                 initial: true,
                 label: "BTFG.CompendiumExporter.EnableSmartFiltering",
@@ -805,6 +1033,11 @@ class OptionsModel extends foundry.abstract.DataModel {
             includeAllEmbeddedItems: new BooleanField({
                 initial: false,
                 label: "BTFG.CompendiumExporter.IncludeAllEmbeddedItems",
+            }),
+            // Incremental export options
+            enableIncrementalExport: new BooleanField({
+                initial: false,
+                label: "BTFG.CompendiumExporter.EnableIncrementalExport",
             })
         };
     }

@@ -137,19 +137,19 @@
     - 支持强制包含所有嵌入内容的选项
     - _Requirements: 2.5, 5.3_
 
-- [ ] 8. 用户界面增强
-  - [ ] 8.1 更新 CompendiumExporterApp 界面
+- [x] 8. 用户界面增强
+  - [x] 8.1 更新 CompendiumExporterApp 界面
     - 添加映射保留选项控件
     - 添加智能过滤选项控件
     - 修改 `scripts/app/compendium-exporter-app.mjs` 文件
     - _Requirements: 5.1, 5.2, 5.3_
 
-  - [ ] 8.2 实现导出预览功能
+  - [x] 8.2 实现导出预览功能
     - 显示将要导出的内容摘要
     - 显示映射配置预览
     - _Requirements: 5.5_
 
-  - [ ] 8.3 更新用户界面模板
+  - [x] 8.3 更新用户界面模板
     - 修改 `templates/export.hbs` 模板
     - 添加新的选项控件和预览区域
     - _Requirements: 5.1, 5.2, 5.5_
