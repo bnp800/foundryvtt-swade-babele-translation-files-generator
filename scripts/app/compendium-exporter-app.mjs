@@ -47,12 +47,12 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
         sidebar: {
             id: "sidebar",
             classes: ["sidebar"],
-            template: "modules/dnd5e-babele-translation-files-generator/templates/sidebar.hbs"
+            template: "modules/swade-babele-translation-files-generator/templates/sidebar.hbs"
         },
         export: {
             id: "export",
             classes: ["export-options"],
-            template: "modules/dnd5e-babele-translation-files-generator/templates/export.hbs",
+            template: "modules/swade-babele-translation-files-generator/templates/export.hbs",
             templates: ["templates/generic/tab-navigation.hbs"],
             scrollable: [""]
         },
@@ -478,7 +478,7 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
     }
 
     _loadPackMapping() {
-        const packsMappings = game.settings.get("dnd-btfg", "packs-mappings");
+        const packsMappings = game.settings.get("swade-btfg", "packs-mappings");
         const pack = this.#packId ?? "massive-export";
         this.#mappings.updateSource(packsMappings[pack.replace('.', '-')] ?? {
             Actor: [], Item: [], Scene: [], JournalEntry: []
@@ -486,10 +486,10 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
     }
 
     async _savePackMapping() {
-        const savedMapping = game.settings.get("dnd-btfg", "packs-mappings");
+        const savedMapping = game.settings.get("swade-btfg", "packs-mappings");
         const pack = this.#packId ?? "massive-export";
         savedMapping[pack.replace('.', '-')] = this.#mappings;
-        await game.settings.set("dnd-btfg", "packs-mappings", savedMapping);
+        await game.settings.set("swade-btfg", "packs-mappings", savedMapping);
     }
 
     async _overrideMappings(e) {

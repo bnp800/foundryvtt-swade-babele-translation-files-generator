@@ -6,24 +6,24 @@
 
 ## Tasks
 
-- [ ] 1. 模块标识和配置更新
-  - [ ] 1.1 更新 module.json 配置
+- [x] 1. 模块标识和配置更新
+  - [x] 1.1 更新 module.json 配置
     - 将 `id` 从 `dnd5e-babele-translation-files-generator` 改为 `swade-babele-translation-files-generator`
     - 将 `title` 改为 "SWADE - Translation files generator for Babele"
     - 将系统依赖从 `dnd5e` 改为 `swade`
     - 更新 `esmodules` 和 `styles` 路径中的文件名
     - _Requirements: 1.1, 1.2, 1.3_
 
-  - [ ] 1.2 重命名核心文件
+  - [x] 1.2 重命名核心文件
     - 将 `scripts/dnd-babele-translation-files-generator.mjs` 重命名为 `scripts/swade-babele-translation-files-generator.mjs`
     - 将 `styles/dnd-babele-translation-files-generator.css` 重命名为 `styles/swade-babele-translation-files-generator.css`
     - _Requirements: 1.4_
 
-  - [ ] 1.3 更新模板路径引用
+  - [x] 1.3 更新模板路径引用
     - 更新 `compendium-exporter-app.mjs` 中的模板路径从 `modules/dnd5e-babele-translation-files-generator/` 改为 `modules/swade-babele-translation-files-generator/`
     - _Requirements: 1.4_
 
-  - [ ] 1.4 更新设置键名称
+  - [x] 1.4 更新设置键名称
     - 将入口文件中的设置键从 `dnd-btfg` 改为 `swade-btfg`
     - 更新 `compendium-exporter-app.mjs` 中所有 `dnd-btfg` 引用
     - _Requirements: 1.1_

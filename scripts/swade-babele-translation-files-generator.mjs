@@ -5,7 +5,7 @@ Hooks.on('init', () => {
         return Array.isArray(array) && array.includes(value);
     });
     
-    game.settings.register("dnd-btfg", "packs-mappings", {
+    game.settings.register("swade-btfg", "packs-mappings", {
         scope: 'client',
         config: false,
         type: Object,

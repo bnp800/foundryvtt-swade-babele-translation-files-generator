@@ -1,7 +1,7 @@
 {
-  "id": "dnd5e-babele-translation-files-generator",
-  "title": "D&D - Translation files generator for Babele",
-  "description": "Generate translation file for Babele by selecting a valid Compendium from dnd5e system.",
+  "id": "swade-babele-translation-files-generator",
+  "title": "SWADE - Translation files generator for Babele",
+  "description": "Generate translation file for Babele by selecting a valid Compendium from SWADE system.",
   "version": "This is auto replaced",
   "compatibility": {
     "minimum": "13",
@@ -14,34 +14,27 @@
     }
   ],
   "esmodules": [
-    "scripts/dnd-babele-translation-files-generator.mjs"
+    "scripts/swade-babele-translation-files-generator.mjs"
   ],
   "scripts": [
     "scripts/lib/jszip.min.js",
     "scripts/lib/FileSaver.js"
   ],
   "styles": [
-    "styles/dnd-babele-translation-files-generator.css"
+    "styles/swade-babele-translation-files-generator.css"
   ],
   "relationships": {
     "systems": [
       {
-        "id": "dnd5e",
+        "id": "swade",
         "type": "system",
         "compatibility": {
           "minimum": "5.0.0",
-          "verified": "5.2.3"
+          "verified": "5.1.0"
         }
       }
     ]
   },
-  "media": [
-    {
-      "type": "setup",
-      "url": "systems/dnd5e/ui/official/dnd5e-repo.jpg",
-      "thumbnail": "systems/dnd5e/ui/official/dnd5e-thumbnail.jpg"
-    }
-  ],
   "languages": [
     {
       "lang": "en",
@@ -54,9 +47,9 @@
       "path": "lang/fr.json"
     }
   ],
-  "manifest": "https://github.com/Enielka/foundryvtt-dnd-babele-translation-files-generator/releases/latest/download/module.json",
+  "manifest": "https://github.com/Enielka/foundryvtt-swade-babele-translation-files-generator/releases/latest/download/module.json",
   "download": "This is auto replaced",
-  "url": "https://github.com/Enielka/foundryvtt-dnd-babele-translation-files-generator",
+  "url": "https://github.com/Enielka/foundryvtt-swade-babele-translation-files-generator",
   "changelog": "This is auto replaced",
   "flags": {
     "hotReload": {
