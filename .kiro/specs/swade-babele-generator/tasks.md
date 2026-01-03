@@ -31,14 +31,14 @@
 - [ ] 2. Checkpoint - 验证模块加载
   - 确保模块在 SWADE 系统中正确加载，检查控制台无错误
 
-- [ ] 3. ItemExporter 重构
-  - [ ] 3.1 移除 D&D 5e 特有字段处理
+- [x] 3. ItemExporter 重构
+  - [x] 3.1 移除 D&D 5e 特有字段处理
     - 移除 `activities` 处理逻辑
     - 移除 `advancement` 处理逻辑
     - 移除 `addBaseMapping` 中的 movement、senses、weight、range、target、capacity 等映射
     - _Requirements: 5.4_
 
-  - [ ] 3.2 实现 SWADE Item 字段提取
+  - [x] 3.2 实现 SWADE Item 字段提取
     - 更新 `getDocumentData` 方法提取 `system.description` 字段
     - 添加 edge 类型的 `system.requirements` 字段处理
     - 添加 power 类型的 `system.trapping` 字段处理
@@ -46,7 +46,7 @@
     - 保留 Active Effects 处理逻辑
     - _Requirements: 2.1, 2.2, 2.3, 2.5, 2.6, 2.7_
 
-  - [ ] 3.3 更新 ItemExporter 基础映射
+  - [x] 3.3 更新 ItemExporter 基础映射
     - 简化 `addBaseMapping` 方法，仅保留 effects 映射
     - _Requirements: 5.1_
 
