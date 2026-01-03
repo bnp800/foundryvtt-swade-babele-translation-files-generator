@@ -202,7 +202,7 @@ export class ItemExporter extends AbstractExporter {
             if (!this.options.asZip) this._stepProgressBar();
         }
 
-        this._reorderMapping(this.dataset.mapping.Item ?? this.dataset.mapping);
+        ItemExporter._reorderMapping(this.dataset.mapping.Item ?? this.dataset.mapping);
         
         // Final validation and reporting
         this.performFinalMappingValidation();
