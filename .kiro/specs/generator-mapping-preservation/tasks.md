@@ -29,8 +29,8 @@
     - **Property 19: Template Validation Completeness**
     - **Validates: Requirements 6.3, 6.4, 6.5**
 
-- [ ] 2. 映射保留引擎实现
-  - [ ] 2.1 实现 MappingPreservationEngine 类
+- [x] 2. 映射保留引擎实现
+  - [x] 2.1 实现 MappingPreservationEngine 类
     - 实现深度合并映射配置功能
     - 实现映射冲突检测和解决
     - 创建 `scripts/core/mapping-preservation-engine.mjs` 文件
@@ -43,7 +43,7 @@
     - **Property 13: Mapping Conflict Resolution**
     - **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 4.4**
 
-  - [ ] 2.3 实现映射验证功能
+  - [x] 2.3 实现映射验证功能
     - 实现映射完整性验证
     - 实现缺失字段检测和报告
     - _Requirements: 1.5, 8.2_
