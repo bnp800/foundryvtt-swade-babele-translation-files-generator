@@ -98,7 +98,7 @@
     - 在 `module.json` 中注册中文语言文件
     - _Requirements: 9.3, 9.4_
 
-- [ ] 8. Checkpoint - 验证完整功能
+- [x] 8. Checkpoint - 验证完整功能
   - 测试单个 compendium 导出功能
   - 测试批量导出 ZIP 功能
   - 测试现有翻译文件合并功能

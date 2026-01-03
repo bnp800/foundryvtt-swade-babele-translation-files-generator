@@ -112,9 +112,9 @@
         <section class="massive-export flexrow">
           {{~#each pack as |content key|}}
           {{#if content.id}}
-          <div class="form-group">
-              <dnd5e-checkbox name="{{ content.id }}" {{ checked (includes ../../selectedPacks content.id)}}></dnd5e-checkbox>
-              <span class="title">{{ content.label }}</span>
+          <div class="form-group checkbox-group">
+              <input type="checkbox" name="{{ content.id }}" id="pack-{{ content.id }}" {{#if (includes ../../selectedPacks content.id)}}checked{{/if}}>
+              <label for="pack-{{ content.id }}">{{ content.label }}</label>
           </div>
           {{/if}}
           {{/each~}}
