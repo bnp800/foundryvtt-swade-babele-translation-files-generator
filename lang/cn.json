@@ -19,6 +19,8 @@
   "BTFG.CompendiumExporter.SortEntriesAlpha": "按字母顺序排列所有条目",
   "BTFG.CompendiumExporter.GenerateFile": "生成翻译文件",
   "BTFG.CompendiumExporter.UseIdAsKey": "使用 ID 作为条目键",
+  "BTFG.CompendiumExporter.EnableSmartFiltering": "启用嵌入物品的智能过滤",
+  "BTFG.CompendiumExporter.IncludeAllEmbeddedItems": "包含所有嵌入物品（忽略智能过滤）",
   "BTFG.CompendiumExporter.ExportMappingWithPacks": "随合集导出自定义映射",
   "BTFG.CompendiumExporter.IncludeCustomMappingInFiles": "在翻译文件中包含自定义映射",
   "BTFG.CompendiumExporter.Advanced": "高级选项",

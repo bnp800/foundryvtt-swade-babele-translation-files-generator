@@ -120,8 +120,8 @@
     - 实现缺失映射的自动补充
     - _Requirements: 3.1, 8.2_
 
-- [ ] 7. 增强 Actor 导出器实现
-  - [ ] 7.1 更新 ActorExporter 类
+- [x] 7. 增强 Actor 导出器实现
+  - [x] 7.1 更新 ActorExporter 类
     - 实现智能嵌入内容过滤
     - 集成 SmartContentFilter 功能
     - 修改 `scripts/exporters/actor-exporter.mjs` 文件
@@ -132,7 +132,7 @@
     - **Property 6: Translation Status Based Filtering**
     - **Validates: Requirements 2.1, 2.2**
 
-  - [ ] 7.3 实现嵌入内容过滤选项
+  - [x] 7.3 实现嵌入内容过滤选项
     - 提供用户可配置的过滤选项
     - 支持强制包含所有嵌入内容的选项
     - _Requirements: 2.5, 5.3_

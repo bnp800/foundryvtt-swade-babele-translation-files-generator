@@ -229,6 +229,16 @@ export class CompendiumExporterApp extends HandlebarsApplicationMixin(Applicatio
             value: this.#options.useIdAsKey,
         };
 
+        context.enableSmartFiltering = {
+            field: this.#options.schema.getField("enableSmartFiltering"),
+            value: this.#options.enableSmartFiltering,
+        };
+
+        context.includeAllEmbeddedItems = {
+            field: this.#options.schema.getField("includeAllEmbeddedItems"),
+            value: this.#options.includeAllEmbeddedItems,
+        };
+
         // Buttons
         context.buttons = [
             {
@@ -787,6 +797,14 @@ class OptionsModel extends foundry.abstract.DataModel {
             }),
             useIdAsKey: new BooleanField({
                 label: "BTFG.CompendiumExporter.UseIdAsKey",
+            }),
+            enableSmartFiltering: new BooleanField({
+                initial: true,
+                label: "BTFG.CompendiumExporter.EnableSmartFiltering",
+            }),
+            includeAllEmbeddedItems: new BooleanField({
+                initial: false,
+                label: "BTFG.CompendiumExporter.IncludeAllEmbeddedItems",
             })
         };
     }

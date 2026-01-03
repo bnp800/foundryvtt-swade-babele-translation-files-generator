@@ -19,6 +19,8 @@
   "BTFG.CompendiumExporter.SortEntriesAlpha": "Sort all entries alphabetically",
   "BTFG.CompendiumExporter.GenerateFile": "Generate translation file",
   "BTFG.CompendiumExporter.UseIdAsKey": "Use id as entry key",
+  "BTFG.CompendiumExporter.EnableSmartFiltering": "Enable smart filtering for embedded items",
+  "BTFG.CompendiumExporter.IncludeAllEmbeddedItems": "Include all embedded items (ignore smart filtering)",
   "BTFG.CompendiumExporter.ExportMappingWithPacks": "Export custom mapping with compendiums",
   "BTFG.CompendiumExporter.IncludeCustomMappingInFiles": "Include custom mapping in translation files",
   "BTFG.CompendiumExporter.Advanced": "Advanced",
