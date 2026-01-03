@@ -104,13 +104,13 @@
   - 测试现有翻译文件合并功能
   - 测试中文界面显示
 
-- [ ] 9. 清理和文档更新
-  - [ ] 9.1 更新 README.md
+- [x] 9. 清理和文档更新
+  - [x] 9.1 更新 README.md
     - 更新项目描述为 SWADE 版本
     - 更新使用说明
     - _Requirements: 1.1_
 
-  - [ ] 9.2 更新 steering 文件
+  - [x] 9.2 更新 steering 文件
     - 更新 `.kiro/steering/` 中的项目描述文件
     - _Requirements: 1.1_
 

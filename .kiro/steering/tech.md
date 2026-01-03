@@ -2,7 +2,7 @@
 
 ## Platform
 - FoundryVTT v13 module
-- Currently configured for D&D 5e system (module ID: `dnd5e-babele-translation-files-generator`)
+- Configured for SWADE system (module ID: `swade-babele-translation-files-generator`)
 - Works with Babele translation module
 
 ## Languages & Frameworks
@@ -19,6 +19,7 @@
 ## Localization
 - English (`lang/en.json`)
 - French (`lang/fr.json`)
+- Simplified Chinese (`lang/zh-Hans.json`)
 
 ## Build & Development
 No build step required - vanilla JavaScript modules loaded directly by FoundryVTT.
