@@ -87,7 +87,11 @@ export class AdventureExporter extends AbstractExporter {
       for (const document of avPack.items) {
         const documentData = exporters.ItemExporter.getDocumentData(document, this.options.mapping.Item, this.dataset.mapping.Item ?? this.dataset.mapping.items);
 
-        exporters.ItemExporter.addBaseMapping(this.dataset.mapping.Item ?? this.dataset.mapping.items, document, documentData);
+        // Ensure effects mapping is added if needed
+        if (documentData.effects && !(this.dataset.mapping.Item ?? this.dataset.mapping.items).effects) {
+          const targetMapping = this.dataset.mapping.Item ?? this.dataset.mapping.items;
+          targetMapping.effects = { path: 'effects', converter: 'effects' };
+        }
 
         let key = this._getExportKey(document);
         key = this.dataset.entries[avPack.name].items[key] && !foundry.utils.objectsEqual(this.dataset.entries[avPack.name].items[key], documentData) ? document._id : key;

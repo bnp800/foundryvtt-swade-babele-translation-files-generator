@@ -102,8 +102,8 @@
     - **Property 30: Version Migration Accuracy**
     - **Validates: Requirements 10.1, 10.2**
 
-- [ ] 6. 增强 Item 导出器实现
-  - [ ] 6.1 更新 ItemExporter 类
+- [x] 6. 增强 Item 导出器实现
+  - [x] 6.1 更新 ItemExporter 类
     - 实现基于完整映射模板的字段提取
     - 支持物品类型特定的映射应用
     - 修改 `scripts/exporters/item-exporter.mjs` 文件
@@ -115,7 +115,7 @@
     - **Property 10: Conditional Mapping Logic Preservation**
     - **Validates: Requirements 3.1, 3.2, 3.3**
 
-  - [ ] 6.3 实现映射完整性确保功能
+  - [x] 6.3 实现映射完整性确保功能
     - 确保导出文件包含所有必要的映射字段
     - 实现缺失映射的自动补充
     - _Requirements: 3.1, 8.2_

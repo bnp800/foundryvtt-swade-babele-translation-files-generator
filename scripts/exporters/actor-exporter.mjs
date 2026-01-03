@@ -56,7 +56,13 @@ export class ActorExporter extends AbstractExporter {
       document.items.filter(item => !item._tombstone).forEach(item => {
         const itemDoc = foundry.utils.duplicate(item);
         const itemData = ItemExporter.getDocumentData(itemDoc, customMapping.Item ?? {}, datasetMapping.Item ?? (datasetMapping.actors ? datasetMapping.items : {}));
-        if (datasetMapping.Item) ItemExporter.addBaseMapping(datasetMapping.Item, itemDoc, itemData);
+        
+        // Ensure effects mapping is added if needed
+        if (itemData.effects && !(datasetMapping.Item ?? (datasetMapping.actors ? datasetMapping.items : {})).effects) {
+          const targetMapping = datasetMapping.Item ?? (datasetMapping.actors ? datasetMapping.items : {});
+          targetMapping.effects = { path: 'effects', converter: 'effects' };
+        }
+        
         const key = documentData.items[item.name] && !foundry.utils.objectsEqual(documentData.items[item.name], itemData) ? item._id : item.name;
         documentData.items[key] = itemData;
       });
