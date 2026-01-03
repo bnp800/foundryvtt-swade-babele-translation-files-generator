@@ -1,4 +1,5 @@
 {
+  "BTFG.ModuleDescription": "Générer un fichier de traduction pour Babele en sélectionnant un Compendium valide du système SWADE.",
   "BTFG.CompendiumExporter.Open": "Ouvrir l'exporteur de compendium",
   "BTFG.CompendiumExporter.Title": "Exporteur de compendium",
   "BTFG.CompendiumExporter.BulkExport": "Exportation en masse",

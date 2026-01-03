@@ -45,6 +45,11 @@
       "lang": "fr",
       "name": "Français",
       "path": "lang/fr.json"
+    },
+    {
+      "lang": "cn",
+      "name": "中文",
+      "path": "lang/cn.json"
     }
   ],
   "manifest": "https://github.com/Enielka/foundryvtt-swade-babele-translation-files-generator/releases/latest/download/module.json",
