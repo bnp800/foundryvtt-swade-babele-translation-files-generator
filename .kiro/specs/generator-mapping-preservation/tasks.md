@@ -53,8 +53,8 @@
     - **Property 26: Missing Field Detection**
     - **Validates: Requirements 1.5, 8.2**
 
-- [ ] 3. 智能内容过滤器实现
-  - [ ] 3.1 实现 SmartContentFilter 类
+- [x] 3. 智能内容过滤器实现
+  - [x] 3.1 实现 SmartContentFilter 类
     - 实现已翻译内容检测功能
     - 实现内容变更检测和哈希比较
     - 创建 `scripts/core/smart-content-filter.mjs` 文件
@@ -66,7 +66,7 @@
     - **Property 7: Change Detection Accuracy**
     - **Validates: Requirements 2.1, 2.2, 2.3, 2.4**
 
-  - [ ] 3.3 实现翻译数据库接口
+  - [x] 3.3 实现翻译数据库接口
     - 创建翻译状态查询接口
     - 实现内容哈希缓存机制
     - _Requirements: 2.1, 7.1_
