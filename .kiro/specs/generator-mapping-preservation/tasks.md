@@ -6,8 +6,8 @@
 
 ## Tasks
 
-- [ ] 1. 映射模板系统实现
-  - [ ] 1.1 创建标准映射模板配置
+- [x] 1. 映射模板系统实现
+  - [x] 1.1 创建标准映射模板配置
     - 基于当前 SWADE 系统字段结构创建完整的映射模板
     - 包含所有物品类型的特定字段映射
     - 创建 `scripts/templates/mapping-templates.mjs` 文件
@@ -17,7 +17,7 @@
     - **Property 16: Template Application Accuracy**
     - **Validates: Requirements 6.2**
 
-  - [ ] 1.3 实现 TemplateManager 类
+  - [x] 1.3 实现 TemplateManager 类
     - 实现模板加载、应用和验证功能
     - 支持物品类型特定的映射合并
     - 创建 `scripts/core/template-manager.mjs` 文件
