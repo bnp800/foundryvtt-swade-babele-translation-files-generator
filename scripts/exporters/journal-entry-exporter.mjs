@@ -20,51 +20,38 @@ export class JournalEntryExporter extends AbstractExporter {
         documentData.pages = Object.fromEntries(
             document.pages.map(({ 
                 id, 
-                name, 
+                name,
+                type,
                 image: { caption } = {}, 
                 src, 
                 video: { width, height } = {}, 
                 text: { content: text } = {}, 
-                system: {
-                    tooltip,
-                    subclassHeader,
-                    unlinkedSpells,
-                    description: {
-                        value: description,
-                        additionalEquipment,
-                        additionalHitPoints,
-                        additionalTraits,
-                        subclass
-                    } = {}
-                } = {}, 
-                flags: { dnd5e: { title: flagsTitle } = {} } = {}
+                system
             }) => {
                 const uniqueName = pageTracker.has(name) ? id : name;
                 pageTracker.add(name);
                 const srcIncluded = (srcToInclude.includes(name) || srcToInclude.includes(id));
-                return [
-                    uniqueName,
-                    {
-                        name,
-                        ...(caption && { caption }),
-                        ...(srcIncluded && src && { src }),
-                        ...(width && { width }),
-                        ...(height && { height }),
-                        ...(text && { text }),
-                        ...(tooltip && { tooltip }),
-                        ...(subclassHeader && { subclassHeader }),
-                        ...(description && { description }),
-                        ...(additionalEquipment && { additionalEquipment }),
-                        ...(additionalHitPoints && { additionalHitPoints }),
-                        ...(additionalTraits && { additionalTraits }),
-                        ...(subclass && { subclass }),
-                        ...(flagsTitle && { flagsTitle }),
-                        ...(unlinkedSpells && Object.keys(unlinkedSpells).length > 0 && {
-                            unlinkedSpells: Object.fromEntries(Object.entries(unlinkedSpells).map(
-                              ([key, value]) => [value.name, { name: value.name }]))
-                        })
-                    }
-                ];
+                
+                const pageData = {
+                    name,
+                    ...(caption && { caption }),
+                    ...(srcIncluded && src && { src }),
+                    ...(width && { width }),
+                    ...(height && { height }),
+                    ...(text && { text })
+                };
+
+                // SWADE Headquarters page type support
+                if (type === "headquarters" && system) {
+                    if (system.advantage) pageData.advantage = system.advantage;
+                    if (system.complication) pageData.complication = system.complication;
+                    if (system.form?.description) pageData.formDescription = system.form.description;
+                    if (system.form?.acquisition) pageData.formAcquisition = system.form.acquisition;
+                    if (system.form?.maintenance) pageData.formMaintenance = system.form.maintenance;
+                    if (system.upgrades) pageData.upgrades = system.upgrades;
+                }
+
+                return [uniqueName, pageData];
             })
         );
     }

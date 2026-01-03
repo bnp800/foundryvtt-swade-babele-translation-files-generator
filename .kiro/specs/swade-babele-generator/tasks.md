@@ -71,12 +71,12 @@
   - 测试导出 SWADE skills、edges、hindrances、powers compendium
   - 验证导出文件包含正确的字段
 
-- [ ] 6. JournalEntryExporter 更新
-  - [ ] 6.1 移除 D&D 5e 特有字段
+- [x] 6. JournalEntryExporter 更新
+  - [x] 6.1 移除 D&D 5e 特有字段
     - 移除 `tooltip`、`subclassHeader`、`unlinkedSpells` 等 D&D 5e 特有字段处理
     - _Requirements: 5.4_
 
-  - [ ] 6.2 添加 SWADE headquarters 页面支持
+  - [x] 6.2 添加 SWADE headquarters 页面支持
     - 添加 headquarters 页面类型检测
     - 提取 `system.advantage`、`system.complication` 字段
     - 提取 `system.form.description`、`system.form.acquisition`、`system.form.maintenance` 字段
