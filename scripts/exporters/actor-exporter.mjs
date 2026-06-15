@@ -29,12 +29,38 @@ export class ActorExporter extends AbstractExporter {
       if (system?.details?.goals) {
         documentData.goals = system.details.goals;
       }
+      // Archetype
+      if (system?.details?.archetype) {
+        documentData.archetype = system.details.archetype;
+      }
+      // Species (Ancestry) name
+      if (system?.details?.species?.name) {
+        documentData.species = system.details.species.name;
+      }
+    }
+
+    // SWADE: Extract category (all actor types have it since SwadeBaseActorData)
+    if (system?.category) {
+      documentData.category = system.category;
     }
 
     // SWADE Vehicle/Group type fields
     if (type === "vehicle" || type === "group") {
       if (system?.description) {
         documentData.description = system.description;
+      }
+    }
+
+    // SWADE Vehicle-specific fields
+    if (type === "vehicle") {
+      if (system?.classification) {
+        documentData.classification = system.classification;
+      }
+      if (system?.driver?.skill) {
+        documentData.driverSkill = system.driver.skill;
+      }
+      if (system?.driver?.skillAlternative) {
+        documentData.driverSkillAlternative = system.driver.skillAlternative;
       }
     }
 

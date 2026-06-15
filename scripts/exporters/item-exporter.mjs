@@ -5,22 +5,37 @@ export class ItemExporter extends AbstractExporter {
         const { name, type, system } = document;
         const documentData = { name };
 
-        // SWADE: Extract system.description field
+        // SWADE: Extract system.description (all items have it)
         if (system?.description) documentData.description = system.description;
 
-        // SWADE Edge: Extract requirements field
-        if (type === "edge" && system?.requirements) {
-            documentData.requirements = system.requirements;
+        // SWADE: Extract system.notes (all items have it since itemDescription() is shared)
+        if (system?.notes) documentData.notes = system.notes;
+
+        // SWADE: Extract system.source (all items have it since itemDescription() is shared)
+        if (system?.source) documentData.source = system.source;
+
+        // SWADE Edge: Extract requirements field (ArrayField → name list string)
+        if (type === "edge" && Array.isArray(system?.requirements) && system.requirements.length) {
+            documentData.requirements = system.requirements
+                .map(req => req.value ?? '')
+                .filter(Boolean)
+                .join(', ');
         }
 
-        // SWADE Power: Extract trapping field
-        if (type === "power" && system?.trapping) {
-            documentData.trapping = system.trapping;
+        // SWADE Power: Extract power-specific fields
+        if (type === "power") {
+            if (system?.trapping) documentData.trapping = system.trapping;
+            if (system?.arcane) documentData.arcane = system.arcane;
+            if (system?.rank) documentData.rank = system.rank;
+            if (system?.damage) documentData.damage = system.damage;
+            if (system?.range) documentData.range = system.range;
+            if (system?.duration) documentData.duration = system.duration;
         }
 
-        // SWADE Weapon/Gear: Extract notes field
-        if ((type === "weapon" || type === "gear") && system?.notes) {
-            documentData.notes = system.notes;
+        // SWADE Weapon: Extract weapon-specific text fields
+        if (type === "weapon") {
+            if (system?.ammo) documentData.ammo = system.ammo;
+            if (system?.minStr) documentData.minStr = system.minStr;
         }
 
         const mappingAdded = this._addCustomMapping(customMapping, document, documentData);
